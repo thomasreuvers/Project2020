@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+using Project.Services;
 
 namespace Project
 {
@@ -26,8 +28,13 @@ namespace Project
         {
             services.AddControllersWithViews();
 
-            // Enable Cookie authentication
+            // Enable cookie authentication
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+
+            // Configure database services
+            services.Configure<DatabaseSettings>(Configuration.GetSection(nameof(DatabaseSettings)));
+            services.AddSingleton(sp => sp.GetRequiredService<IOptions<DatabaseSettings>>().Value);
+            services.AddSingleton<UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
