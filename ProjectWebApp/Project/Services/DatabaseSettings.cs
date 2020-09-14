@@ -12,7 +12,7 @@ namespace Project.Services
        public string DatabaseName { get; set; }
     }
 
-    interface IDatabaseSettings
+    public interface IDatabaseSettings
     {
         string UsersCollectionName { get; set; }
         string ConnectionString { get; set; }

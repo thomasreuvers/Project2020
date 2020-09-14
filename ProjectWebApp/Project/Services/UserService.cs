@@ -11,7 +11,7 @@ namespace Project.Services
     {
         private readonly IMongoCollection<User> _users;
 
-        public UserService(DatabaseSettings settings)
+        public UserService(IDatabaseSettings settings)
         {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
@@ -19,8 +19,9 @@ namespace Project.Services
             _users = database.GetCollection<User>(settings.UsersCollectionName);
         }
 
-        public Task<User> Get(string emailAddress, string passwordHash) =>
-            _users.Find(user => user.EmailAddress.Equals(emailAddress) && user.PasswordHash.Equals(passwordHash)).FirstOrDefaultAsync();
+        public Task<User> AuthenticateTask(string emailAddress, string passwordHash) =>
+            _users.Find(user => user.EmailAddress.Equals(emailAddress) && user.PasswordHash.Equals(passwordHash))
+                .FirstOrDefaultAsync();
     }
 
 }
