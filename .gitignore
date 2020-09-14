@@ -354,4 +354,5 @@ MigrationBackup/
 
 # Exclude json file with credentials
 appsettings.json
+appsettings.Development.json
 
