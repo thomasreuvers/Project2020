@@ -16,10 +16,8 @@
     <input type="submit" />
 </form>
 
-@if (ViewBag.message != null)
-{
-    @ViewBag.message
-}
+@*Log model Errors*@
+@Html.ValidationSummary()
 
 @if (User.Identity.IsAuthenticated)
 {

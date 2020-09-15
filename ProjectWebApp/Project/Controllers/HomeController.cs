@@ -39,7 +39,7 @@ namespace Project.Controllers
         {
             if (model == null)
             {
-                ViewBag.message = "model is empty";
+                ModelState.AddModelError("emptyModel", "Model is empty");
                 return RedirectToAction("Index", "Home");
             }
 
@@ -47,7 +47,7 @@ namespace Project.Controllers
             var user = await _userService.AuthenticateTask(model.EmailAddress, model.Password);
             if (user == null)
             {
-                ViewBag.message = "user is null";
+                ModelState.AddModelError("userIsNull", "The user doesn't exist or could not be retrieved from the Db.");
                 return RedirectToAction("Index", "Home");
             }
                 
