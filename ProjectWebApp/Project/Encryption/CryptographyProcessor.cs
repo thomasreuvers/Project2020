@@ -9,7 +9,7 @@ namespace Project.Encryption
 {
     public class CryptographyProcessor
     {
-        public string CreateSalt(int size)
+        public string CreateSalt(int size = 16)
         {
             var rng = new RNGCryptoServiceProvider();
             var buff = new byte[size];
