@@ -14,12 +14,12 @@ namespace Project.Controllers
     public class AccountController : Controller
     {
         private readonly UserService _userService;
-        private readonly CryptographyProcessor _cryptographyProcessor;
+        // private readonly CryptographyProcessor _cryptographyProcessor;
 
         public AccountController(CryptographyProcessor cryptographyProcessor, UserService userService)
         {
             _userService = userService;
-            _cryptographyProcessor = cryptographyProcessor;
+            // _cryptographyProcessor = cryptographyProcessor;
         }
 
         public IActionResult Register()
@@ -32,6 +32,8 @@ namespace Project.Controllers
         {
             if (ModelState.IsValid)
             {
+                var _cryptographyProcessor = new CryptographyProcessor();
+
                var salt = _cryptographyProcessor.CreateSalt();
                var hashedPassword = _cryptographyProcessor.GenerateHash(model.Password, salt);
 
