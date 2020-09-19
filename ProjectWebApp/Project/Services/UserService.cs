@@ -19,9 +19,14 @@ namespace Project.Services
             _users = database.GetCollection<User>(settings.UsersCollectionName);
         }
 
+        public Task<User> GetUserByEmail(string emailAddress) =>
+            _users.Find(user => user.EmailAddress.Equals(emailAddress)).FirstOrDefaultAsync();
+
         public Task<User> AuthenticateTask(string emailAddress, string passwordHash) =>
             _users.Find(user => user.EmailAddress.Equals(emailAddress) && user.PasswordHash.Equals(passwordHash))
                 .FirstOrDefaultAsync();
+
+        public async void CreateUser(User user) => await _users.InsertOneAsync(user);
     }
 
 }
