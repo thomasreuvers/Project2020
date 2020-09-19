@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Project.Encryption;
 using Project.Entities;
 using Project.Models;
 using Project.Services;
@@ -44,13 +45,21 @@ namespace Project.Controllers
             }
 
             // Add password hashing
-            var user = await _userService.AuthenticateTask(model.EmailAddress, model.Password);
+            var users = await _userService.Get();
+            var user = await _userService.GetUserByEmailTask(model.EmailAddress);
+            // var user = await _userService.AuthenticateTask(model.EmailAddress, model.Password);
             if (user == null)
             {
                 ModelState.AddModelError("userIsNull", "The user doesn't exist or could not be retrieved from the Db.");
                 return RedirectToAction("Index", "Home");
             }
-                
+            var cryptographyProcessor = new CryptographyProcessor();
+            var isValidUser = cryptographyProcessor.VerifyHashedPassword(model.Password, user.PasswordHash, user.Salt);
+
+            if (!isValidUser)
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
 
             /* Create the identity
