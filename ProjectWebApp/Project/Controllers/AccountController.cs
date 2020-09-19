@@ -14,12 +14,10 @@ namespace Project.Controllers
     public class AccountController : Controller
     {
         private readonly UserService _userService;
-        // private readonly CryptographyProcessor _cryptographyProcessor;
 
         public AccountController(UserService userService)
         {
             _userService = userService;
-            // _cryptographyProcessor = cryptographyProcessor;
         }
 
         public IActionResult Register()
@@ -37,10 +35,10 @@ namespace Project.Controllers
                var salt = _cryptographyProcessor.CreateSalt();
                var hashedPassword = _cryptographyProcessor.GenerateHash(model.Password, salt);
 
-               var doesUserExist = await _userService.GetUserByEmailTask(model.EmailAddress) == null;
+               var doesUserExist = await _userService.GetUserByEmailTask(model.EmailAddress) != null;
 
                // Create user & seed to database
-               if (doesUserExist)
+               if (!doesUserExist)
                {
                    _userService.CreateUserAsync(new User
                    {
@@ -51,6 +49,8 @@ namespace Project.Controllers
                        Salt = salt,
                        SecretUserKey = "0"
                    });
+
+
                }
 
                /* TODO:
