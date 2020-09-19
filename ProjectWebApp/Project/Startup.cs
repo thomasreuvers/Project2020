@@ -35,6 +35,11 @@ namespace Project
             services.Configure<DatabaseSettings>(Configuration.GetSection(nameof(DatabaseSettings)));
             services.AddSingleton<IDatabaseSettings>(sp => sp.GetRequiredService<IOptions<DatabaseSettings>>().Value);
             services.AddSingleton<UserService>();
+
+            // Configure mail services
+            services.Configure<MailSettings>(Configuration.GetSection(nameof(MailSettings)));
+            services.AddSingleton<IMailSettings>(sp => sp.GetRequiredService<IOptions<MailSettings>>().Value);
+            services.AddSingleton<MailService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
