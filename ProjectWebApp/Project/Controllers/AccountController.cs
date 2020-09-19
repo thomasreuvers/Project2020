@@ -28,7 +28,7 @@ namespace Project.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register(RegisterModel model)
+        public async Task<IActionResult> Register(RegisterModel model)
         {
             if (ModelState.IsValid)
             {
@@ -37,12 +37,12 @@ namespace Project.Controllers
                var salt = _cryptographyProcessor.CreateSalt();
                var hashedPassword = _cryptographyProcessor.GenerateHash(model.Password, salt);
 
-               var doesUserExist = _userService.GetUserByEmail(model.EmailAddress) != null;
+               var doesUserExist = await _userService.GetUserByEmailTask(model.EmailAddress) == null;
 
                // Create user & seed to database
-               if (!doesUserExist)
+               if (doesUserExist)
                {
-                   _userService.CreateUser(new User
+                   _userService.CreateUserAsync(new User
                    {
                        EmailAddress = model.EmailAddress,
                        Username = model.Username,
