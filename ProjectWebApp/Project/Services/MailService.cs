@@ -18,9 +18,10 @@ namespace Project.Services
             {
                 Host = settings.Host,
                 Port = 587,
-                EnableSsl = true,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
                 Credentials = new NetworkCredential(settings.MailAddress, settings.MailPassword),
+                EnableSsl = true,
                 Timeout = 20000
             };
 
