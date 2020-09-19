@@ -16,7 +16,7 @@ namespace Project.Entities
         public string PasswordHash { get; set; }
         public string Salt { get; set; }
         public string EmailAddress { get; set; }
-
+        public bool EmailIsVerified { get; set; }
         public string SecretUserKey { get; set; }
 
         public List<string> Roles = new List<string>();
