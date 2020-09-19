@@ -14,10 +14,12 @@ namespace Project.Controllers
     public class AccountController : Controller
     {
         private readonly UserService _userService;
+        private readonly MailService _mailService;
 
-        public AccountController(UserService userService)
+        public AccountController(UserService userService, MailService mailService)
         {
             _userService = userService;
+            _mailService = mailService;
         }
 
         public IActionResult Register()
@@ -50,7 +52,7 @@ namespace Project.Controllers
                        SecretUserKey = "0"
                    });
 
-
+                    _mailService.SendMailAsync(model.EmailAddress, "test", "Test message");
                }
 
                /* TODO:
