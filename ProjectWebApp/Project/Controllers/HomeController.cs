@@ -44,18 +44,17 @@ namespace Project.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            // Add password hashing
-            var users = await _userService.Get();
+            // Get user by email if not null
             var user = await _userService.GetUserByEmailTask(model.EmailAddress);
-            // var user = await _userService.AuthenticateTask(model.EmailAddress, model.Password);
             if (user == null)
             {
                 ModelState.AddModelError("userIsNull", "The user doesn't exist or could not be retrieved from the Db.");
                 return RedirectToAction("Index", "Home");
             }
+
+            // Validate entered password against stored hashed and salted password
             var cryptographyProcessor = new CryptographyProcessor();
             var isValidUser = cryptographyProcessor.VerifyHashedPassword(model.Password, user.PasswordHash, user.Salt);
-
             if (!isValidUser)
             {
                 return RedirectToAction("Index", "Home");
