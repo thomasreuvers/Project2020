@@ -22,6 +22,12 @@ namespace Project.Controllers
             _cryptographyProcessor = cryptographyProcessor;
         }
 
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
         public IActionResult Register(RegisterModel model)
         {
             if (ModelState.IsValid)
