@@ -9,7 +9,6 @@ namespace Project.Models
     public class RegisterModel
     {
         [Required(ErrorMessage = "Username is required")]
-        [DataType(DataType.Custom)]
         public string Username { get; set; }
 
         [Required(ErrorMessage = "Password is required")]
