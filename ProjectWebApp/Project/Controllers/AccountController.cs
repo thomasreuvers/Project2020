@@ -16,7 +16,7 @@ namespace Project.Controllers
         private readonly UserService _userService;
         // private readonly CryptographyProcessor _cryptographyProcessor;
 
-        public AccountController(CryptographyProcessor cryptographyProcessor, UserService userService)
+        public AccountController(UserService userService)
         {
             _userService = userService;
             // _cryptographyProcessor = cryptographyProcessor;
