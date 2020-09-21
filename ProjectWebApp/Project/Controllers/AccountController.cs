@@ -38,7 +38,7 @@ namespace Project.Controllers
             {
                 // Get user by email if not null
                 var user = await _userService.GetUserByEmailAsync(model.EmailAddress);
-                if (user == null)
+                if (user == null || !user.EmailIsVerified)
                 {
                     ModelState.AddModelError("userIsNull", "The user doesn't exist or could not be retrieved from the Db.");
                     return View();
