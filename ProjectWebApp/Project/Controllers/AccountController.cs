@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Project.Encryption;
 using Project.Entities;
+using Project.ExtensionMethods;
 using Project.Models;
 using Project.Services;
 
@@ -49,7 +50,7 @@ namespace Project.Controllers
                        PasswordHash = hashedPassword,
                        EmailIsVerified = false,
                        Salt = salt,
-                       SecretUserKey = "0"
+                       SecretUserKey = "".RandomString()
                    });
 
                     _mailService.SendMailAsync(model.EmailAddress, "test", "Test message");
