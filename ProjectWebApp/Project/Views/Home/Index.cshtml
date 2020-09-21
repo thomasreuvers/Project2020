@@ -7,28 +7,3 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
-
-<form asp-action="Login" asp-controller="Home" method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <input asp-for="EmailAddress" />
-    <br />
-    <input asp-for="Password" />
-    <input type="submit" />
-</form>
-
-@*Log model Errors*@
-@Html.ValidationSummary()
-
-@if (User.Identity.IsAuthenticated)
-{
-    <div>
-        Hello @User.Identity.Name
-    </div>
-    <div>
-        <a asp-action="Logout">Logout</a>
-    </div>
-}
-else
-{
-    <p>Not logged in.</p>
-}
