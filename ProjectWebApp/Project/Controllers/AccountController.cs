@@ -23,6 +23,17 @@ namespace Project.Controllers
             _mailService = mailService;
         }
 
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login()
+        {
+
+        }
+
         public IActionResult Register()
         {
             return View();
@@ -32,7 +43,7 @@ namespace Project.Controllers
         public async Task<IActionResult> Register(RegisterModel model)
         {
             if (ModelState.IsValid)
-            {
+            { 
                 var _cryptographyProcessor = new CryptographyProcessor();
 
                var salt = _cryptographyProcessor.CreateSalt();
@@ -58,11 +69,8 @@ namespace Project.Controllers
 
                /* TODO:
                 * Send verification email to user
-                * Make a random SecretUserKey
                 *
                 */
-
-               // test out hashing processor
             }
 
             return View();
