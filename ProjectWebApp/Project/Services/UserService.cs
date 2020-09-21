@@ -21,14 +21,19 @@ namespace Project.Services
 
         public Task<List<User>> Get() => _users.Find(user => true).ToListAsync();
 
-        public Task<User> GetUserByEmailTask(string emailAddress) =>
-            _users.Find(user => user.EmailAddress.Equals(emailAddress)).FirstOrDefaultAsync();
+        public async Task<User> GetUserByEmailAsync(string emailAddress) => 
+            await _users.Find(user => user.EmailAddress.Equals(emailAddress)).FirstOrDefaultAsync();
 
-        public Task<User> AuthenticateTask(string emailAddress, string passwordHash) =>
-            _users.Find(user => user.EmailAddress.Equals(emailAddress) && user.PasswordHash.Equals(passwordHash))
-                .FirstOrDefaultAsync();
+        public async Task<User> GetUserByIdAsync(string id) => await _users.Find(user => user.Id.Equals(id)).FirstOrDefaultAsync();
 
-        public async void CreateUserAsync(User user) => await _users.InsertOneAsync(user);
+        public async Task<User> CreateUserAsync(User user)
+        {
+            await _users.InsertOneAsync(user);
+            return user;
+        }
+
+        public async void UpdateUserAsync(User user) => await _users.ReplaceOneAsync(x => x.Id == user.Id, user);
+
     }
 
 }

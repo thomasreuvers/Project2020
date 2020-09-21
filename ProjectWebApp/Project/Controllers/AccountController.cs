@@ -37,7 +37,7 @@ namespace Project.Controllers
             if (ModelState.IsValid)
             {
                 // Get user by email if not null
-                var user = await _userService.GetUserByEmailTask(model.EmailAddress);
+                var user = await _userService.GetUserByEmailAsync(model.EmailAddress);
                 if (user == null)
                 {
                     ModelState.AddModelError("userIsNull", "The user doesn't exist or could not be retrieved from the Db.");
@@ -95,31 +95,53 @@ namespace Project.Controllers
                var salt = _cryptographyProcessor.CreateSalt();
                var hashedPassword = _cryptographyProcessor.GenerateHash(model.Password, salt);
 
-               var doesUserExist = await _userService.GetUserByEmailTask(model.EmailAddress) != null;
+               var doesUserExist = await _userService.GetUserByEmailAsync(model.EmailAddress) != null;
 
                // Create user & seed to database
                if (!doesUserExist)
                {
-                   _userService.CreateUserAsync(new User
+                   var user = await _userService.CreateUserAsync(new User
                    {
                        EmailAddress = model.EmailAddress,
                        Username = model.Username,
                        PasswordHash = hashedPassword,
                        EmailIsVerified = false,
                        Salt = salt,
-                       SecretUserKey = "".RandomString()
+                       SecretUserKey = "".RandomString(),
+                       VerificationToken = "".RandomString()
                    });
 
-                    _mailService.SendMailAsync(model.EmailAddress, "test", "Test message");
+                   _mailService.SendMailAsync(model.EmailAddress, "test", $"https://localhost:44325/Account/verifyemailaddress/?id={user.Id}&verificationtoken={user.VerificationToken}");
                }
 
                /* TODO:
-                * Send verification email to user
+                * Send proper verification email to user
                 *
                 */
             }
 
             return View();
+        }
+
+        public async Task<IActionResult> VerifyEmailAddress(string id, string verificationToken)
+        {
+            if (!string.IsNullOrWhiteSpace(id) && !string.IsNullOrWhiteSpace(verificationToken))
+            {
+                var user = await _userService.GetUserByIdAsync(id);
+
+                if (user != null && user.VerificationToken == verificationToken)
+                {
+                    user.EmailIsVerified = true;
+
+                    _userService.UpdateUserAsync(user);
+
+                    // Show user email verified screen.
+
+                    return View("Login");
+                }
+            }
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

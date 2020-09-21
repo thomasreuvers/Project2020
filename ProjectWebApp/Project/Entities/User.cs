@@ -18,6 +18,7 @@ namespace Project.Entities
         public string EmailAddress { get; set; }
         public bool EmailIsVerified { get; set; }
         public string SecretUserKey { get; set; }
+        public string VerificationToken { get; set; }
 
         public List<string> Roles = new List<string>();
     }
