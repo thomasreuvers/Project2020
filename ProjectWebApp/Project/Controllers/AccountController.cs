@@ -38,7 +38,6 @@ namespace Project.Controllers
 
             // Get user by email if not null
             var user = await _userService.GetUserByEmailAsync(model.EmailAddress);
-
             if (user == null)
             {
                 ModelState.AddModelError("userIsNull", "The user doesn't exist or could not be retrieved from the Db.");
@@ -46,8 +45,7 @@ namespace Project.Controllers
             }
 
             // Validate entered password against stored hashed and salted password
-            var cryptographyProcessor = new CryptographyProcessor();
-            var isValidUser = cryptographyProcessor.VerifyHashedPassword(model.Password, user.PasswordHash, user.Salt);
+            var isValidUser = CryptographyProcessor.VerifyHashedPassword(model.Password, user.PasswordHash, user.Salt);
             if (!isValidUser)
             {
                 ModelState.AddModelError("invalidPasswordOrEmail", "Password or Email is invalid!");
@@ -96,37 +94,37 @@ namespace Project.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterModel model)
         {
-            if (ModelState.IsValid)
-            { 
-                var _cryptographyProcessor = new CryptographyProcessor();
+            if (!ModelState.IsValid) return View();
 
-               var salt = _cryptographyProcessor.CreateSalt();
-               var hashedPassword = _cryptographyProcessor.GenerateHash(model.Password, salt);
+            var salt = CryptographyProcessor.CreateSalt();
+            var hashedPassword = CryptographyProcessor.GenerateHash(model.Password, salt);
 
-               var doesUserExist = await _userService.GetUserByEmailAsync(model.EmailAddress) != null;
+            var doesUserExist = await _userService.GetUserByEmailAsync(model.EmailAddress) != null;
 
-               // Create user & seed to database
-               if (!doesUserExist)
-               {
-                   var user = await _userService.CreateUserAsync(new User
-                   {
-                       EmailAddress = model.EmailAddress,
-                       Username = model.Username,
-                       PasswordHash = hashedPassword,
-                       EmailIsVerified = false,
-                       Salt = salt,
-                       SecretUserKey = "".RandomString(),
-                       VerificationToken = "".RandomString()
-                   });
+            // Create user & seed to database
+            if (doesUserExist)
+            {
+                ModelState.AddModelError("userAlreadyExists", "This email is already in use, please use a different one!");
+                return View();
+            }
 
-                   _mailService.SendMailAsync(model.EmailAddress, "test", $"https://localhost:44325/Account/verifyemailaddress/?id={user.Id}&verificationtoken={user.VerificationToken}");
-               }
+            var user = await _userService.CreateUserAsync(new User
+            {
+                EmailAddress = model.EmailAddress,
+                Username = model.Username,
+                PasswordHash = hashedPassword,
+                EmailIsVerified = false,
+                Salt = salt,
+                SecretUserKey = "".RandomString(),
+                VerificationToken = "".RandomString()
+            });
 
-               /* TODO:
+            _mailService.SendMailAsync(model.EmailAddress, "test", $"https://localhost:44325/Account/verifyemailaddress/?id={user.Id}&verificationtoken={user.VerificationToken}");
+
+            /* TODO:
                 * Send proper verification email to user
                 *
                 */
-            }
 
             return View();
         }

@@ -9,9 +9,8 @@ namespace Project.Encryption
 {
     public class CryptographyProcessor
     {
-        // TODO: create new salt per session.
 
-        public string CreateSalt(int size = 16)
+        public static string CreateSalt(int size = 16)
         {
             var rng = new RNGCryptoServiceProvider();
             var buff = new byte[size];
@@ -19,7 +18,7 @@ namespace Project.Encryption
             return Convert.ToBase64String(buff);
         }
 
-        public string GenerateHash(string input, string salt)
+        public static string GenerateHash(string input, string salt)
         {
             var bytes = Encoding.UTF8.GetBytes(input + salt);
 
@@ -29,7 +28,7 @@ namespace Project.Encryption
             return Convert.ToBase64String(hash);
         }
 
-        public bool VerifyHashedPassword(string plainTextInput, string hash, string salt)
+        public static bool VerifyHashedPassword(string plainTextInput, string hash, string salt)
         {
             var compareHash = GenerateHash(plainTextInput, salt);
             return compareHash.Equals(hash);
