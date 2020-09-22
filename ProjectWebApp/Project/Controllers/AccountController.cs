@@ -34,43 +34,51 @@ namespace Project.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid) return View();
+
+            // Get user by email if not null
+            var user = await _userService.GetUserByEmailAsync(model.EmailAddress);
+
+            if (user == null)
             {
-                // Get user by email if not null
-                var user = await _userService.GetUserByEmailAsync(model.EmailAddress);
-                if (user == null || !user.EmailIsVerified)
-                {
-                    ModelState.AddModelError("userIsNull", "The user doesn't exist or could not be retrieved from the Db.");
-                    return View();
-                }
+                ModelState.AddModelError("userIsNull", "The user doesn't exist or could not be retrieved from the Db.");
+                return View();
+            }
 
-                // Validate entered password against stored hashed and salted password
-                var cryptographyProcessor = new CryptographyProcessor();
-                var isValidUser = cryptographyProcessor.VerifyHashedPassword(model.Password, user.PasswordHash, user.Salt);
-                if (!isValidUser)
-                {
-                    ModelState.AddModelError("userIsNull", "Password or Email is invalid!");
-                    return View();
-                }
+            // Validate entered password against stored hashed and salted password
+            var cryptographyProcessor = new CryptographyProcessor();
+            var isValidUser = cryptographyProcessor.VerifyHashedPassword(model.Password, user.PasswordHash, user.Salt);
+            if (!isValidUser)
+            {
+                ModelState.AddModelError("invalidPasswordOrEmail", "Password or Email is invalid!");
+                return View();
+            }
 
+            // Check if email is verified
+            if (!user.EmailIsVerified)
+            {
+                ModelState.AddModelError("emailNotVerified", "Please verify your email!");
+                return View();
+            }
 
-                /* Create the identity
+            /* Create the identity
                  * Add other user info later on
                  */
-                var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-                identity.AddClaim(new Claim(ClaimTypes.Name, user.Username));
-                identity.AddClaim(new Claim(ClaimTypes.Email, user.EmailAddress));
+            var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+            identity.AddClaim(new Claim(ClaimTypes.Name, user.Username));
+            identity.AddClaim(new Claim(ClaimTypes.Email, user.EmailAddress));
 
-                // Add roles
-                foreach (var role in user.Roles)
-                {
-                    identity.AddClaim(new Claim(ClaimTypes.Role, role));
-                }
-
-                // Sign in
-                var principle = new ClaimsPrincipal(identity);
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principle);
+            // Add roles
+            foreach (var role in user.Roles)
+            {
+                identity.AddClaim(new Claim(ClaimTypes.Role, role));
             }
+
+            // Sign in
+            var principle = new ClaimsPrincipal(identity);
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principle);
+
+            //TODO Redirect to panel
             return View();
         }
 
@@ -135,9 +143,7 @@ namespace Project.Controllers
 
                     _userService.UpdateUserAsync(user);
 
-                    // Show user email verified screen.
-
-                    return View("Login");
+                    return View();
                 }
             }
 
