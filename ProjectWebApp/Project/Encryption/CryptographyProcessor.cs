@@ -9,6 +9,8 @@ namespace Project.Encryption
 {
     public class CryptographyProcessor
     {
+        // TODO: create new salt per session.
+
         public string CreateSalt(int size = 16)
         {
             var rng = new RNGCryptoServiceProvider();
