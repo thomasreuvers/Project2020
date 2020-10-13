@@ -76,8 +76,8 @@ namespace Project.Controllers
             var principle = new ClaimsPrincipal(identity);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principle);
 
-            //TODO Redirect to panel
-            return View();
+            // Redirect to secured user-panel
+            return RedirectToAction("Index", "Panel");
         }
 
         public async Task<IActionResult> Logout()
