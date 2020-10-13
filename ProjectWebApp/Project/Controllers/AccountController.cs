@@ -60,8 +60,8 @@ namespace Project.Controllers
             }
 
             /* Create the identity
-                 * Add other user info later on
-                 */
+             * Add other user info later on
+             */
             var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
             identity.AddClaim(new Claim(ClaimTypes.Name, user.Username));
             identity.AddClaim(new Claim(ClaimTypes.Email, user.EmailAddress));
