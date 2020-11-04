@@ -15,16 +15,18 @@ namespace Testing
             stringList.Add("Benchpress");
             stringList.Add("10");
             stringList.Add("3");
+            stringList.Add("25.5");
 
             stringList.Add("Squat");
             stringList.Add("20");
             stringList.Add("4");
+            stringList.Add("12.25");
 
             TestCase(stringList);
 
             foreach (var exercise in _exercises)
             {
-                Console.WriteLine($"Name: {exercise.Name}\n Reps: {exercise.Reps} \n Sets: {exercise.Sets} \n");
+                Console.WriteLine($"Name: {exercise.Name}\n Reps: {exercise.Reps} \n Sets: {exercise.Sets} \n Weight: {exercise.Weight} \n");
             }
         }
 
@@ -46,14 +48,27 @@ namespace Testing
             {
                 if (propData.Count.Equals(0)) break;
 
-                if (prop.PropertyType == typeof(int))
+                switch (Type.GetTypeCode(prop.PropertyType))
                 {
-                    prop.SetValue(exercise, int.Parse(propData.ElementAt(0)), null);
+                    case TypeCode.Int32:
+                        prop.SetValue(exercise, int.Parse(propData.ElementAt(0)), null);
+                        break;
+                    case TypeCode.Decimal:
+                        prop.SetValue(exercise, decimal.Parse(propData.ElementAt(0)), null);
+                        break;
+                    default:
+                        prop.SetValue(exercise, propData.ElementAt(0), null);
+                        break;
                 }
-                else
-                {
-                    prop.SetValue(exercise, propData.ElementAt(0), null);
-                }
+
+                // if (prop.PropertyType == typeof(int))
+                // {
+                //     prop.SetValue(exercise, int.Parse(propData.ElementAt(0)), null);
+                // }
+                // else
+                // {
+                //     prop.SetValue(exercise, propData.ElementAt(0), null);
+                // }
 
                 propData.RemoveAt(0);
             }
@@ -70,5 +85,6 @@ namespace Testing
         public string Name { get; set; }
         public int Reps { get; set; }
         public int Sets { get; set; }
+        public decimal Weight { get; set; }
     }
 }

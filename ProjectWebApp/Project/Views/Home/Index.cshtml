@@ -1,7 +1,93 @@
-﻿@model LoginModel
+﻿@using Microsoft.Extensions.WebEncoders.Testing
+@model LoginModel
 @{
     ViewData["Title"] = "Home Page";
+
+    var schema = new SchemaModel();
+
+    schema.SchemaName = "test";
+
+    var data = new List<string>
+    {
+        "Benchpress",
+        "30",
+        "3",
+        "6",
+        "Squat",
+        "50",
+        "3",
+        "12",
+    };
+
+    schema.InputFields = data;
+    var test = new List<string>();
 }
+<table>
+    <thead>
+    <tr>
+        <th>Exercise</th>
+        <th>Weight</th>
+        <th>Reps</th>
+        <th>Sets</th>
+    </tr>
+    </thead>
+    
+    <tbody id="table">
+    @for (var i = 0; i < schema.InputFields.Count; i++)
+    {
+        {
+            test.AddRange(schema.InputFields.Take(4).ToList()); 
+            schema.InputFields.RemoveRange(0, 4);
+        }
+
+        <tr>
+            <td><input name="inputfields" value="@test[0]"/></td>
+            <td><input name="inputfields" value="@test[1]"/></td>
+            <td><input name="inputfields" value="@test[2]"/></td>
+            <td><input name="inputfields" value="@test[3]"/></td>
+        </tr>
+
+        { test.Clear();}
+    }
+    </tbody>
+</table>
+
+<button onclick="AddNewRow();">New Row</button>
+
+<script language="javascript">
+    var table = document.getElementById("table");
+
+    function AddNewRow() {
+        var row = table.insertRow();
+
+        var i;
+        var cell;
+        for (i = 0; i < 5; i++) {
+            cell = row.insertCell(i);
+
+            if (i === 4) {
+                var removeRowBtn = document.createElement("button");
+                removeRowBtn.onclick = function() {
+                    var td = event.target.parentNode; 
+                    var tr = td.parentNode; // the row to be removed
+                    tr.parentNode.removeChild(tr);
+                }
+                removeRowBtn.textContent = "Remove Row";
+                cell.appendChild(removeRowBtn);
+                break;
+            }
+
+            var input = document.createElement("input");
+
+            input.setAttribute("name", "inputfields");
+
+            cell.appendChild(input);
+        }
+    }
+
+</script>
+
+
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
