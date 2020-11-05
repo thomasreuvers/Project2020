@@ -1,56 +1,5 @@
 ﻿@using Microsoft.Extensions.WebEncoders.Testing
 @model LoginModel
-@{
-    ViewData["Title"] = "Home Page";
-
-    var schema = new SchemaModel();
-
-    schema.SchemaName = "test";
-
-    var data = new List<string>
-    {
-        "Benchpress",
-        "30",
-        "3",
-        "6",
-        "Squat",
-        "50",
-        "3",
-        "12",
-    };
-
-    schema.InputFields = data;
-    var test = new List<string>();
-}
-<table>
-    <thead>
-    <tr>
-        <th>Exercise</th>
-        <th>Weight</th>
-        <th>Reps</th>
-        <th>Sets</th>
-    </tr>
-    </thead>
-    
-    <tbody id="table">
-    @for (var i = 0; i < schema.InputFields.Count; i++)
-    {
-        {
-            test.AddRange(schema.InputFields.Take(4).ToList()); 
-            schema.InputFields.RemoveRange(0, 4);
-        }
-
-        <tr>
-            <td><input name="inputfields" value="@test[0]"/></td>
-            <td><input name="inputfields" value="@test[1]"/></td>
-            <td><input name="inputfields" value="@test[2]"/></td>
-            <td><input name="inputfields" value="@test[3]"/></td>
-        </tr>
-
-        { test.Clear();}
-    }
-    </tbody>
-</table>
 
 <button onclick="AddNewRow();">New Row</button>
 
@@ -86,10 +35,3 @@
     }
 
 </script>
-
-
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>

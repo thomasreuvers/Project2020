@@ -1,71 +1,138 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-
-a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
-}
-
-/* Provide sufficient contrast against white background */
-a {
-  color: #0366d6;
-}
-
-.btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
-}
-
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
-}
-
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  font-size: 14px;
-}
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.border-top {
-  border-top: 1px solid #e5e5e5;
-}
-.border-bottom {
-  border-bottom: 1px solid #e5e5e5;
-}
-
-.box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-}
-
-button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
-}
-
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  position: relative;
-  min-height: 100%;
+﻿:root {
+    --bar-height: 72px;
+    --color-primary: #009579;
+    --color-primary-light: #0affd2;
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
 }
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+
+/* HEADER */
+.header {
+    height: 100vh;
+    background: linear-gradient(to bottom right, var(--color-primary), var(--color-primary-light));
+    display: flex;
+    align-items: center;
+    padding-top: var(--bar-height);
+    box-sizing: border-box;
+}.call-to-action {
+    max-width: 400px;
+    padding: 32px;
+    box-sizing: border-box;
+    color: #ffffff;
+    background: #000000;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+}.call-to-action__title {
+     margin-top: 0;
+ }.call-to-action__description {
+      font-weight: 500;
+      font-size: 1.1em;
+      padding-bottom: .5em;
+  }
+.call-to-action__button {
+    background: white;
+    outline: none;
+    font: bold 1.1em 'Poppins', sans-serif;
+    color: var(--color-primary);
+    border: 1px solid #ffffff;
+    border-radius: 4px;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    text-decoration: none;
+}.call-to-action__button:hover {
+        background: transparent;
+        color: #ffffff;
+    }
+
+.bar {
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--bar-height);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    transition: background 0.15s;
+}.bar--bg {
+     background: var(--color-primary);
+
+ }.bar__content {
+      height: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  }.bar__logo {
+       height: 100%;
+   }.bar__nav-toggle {
+        cursor: pointer;
+    }.bar__nav-toggle > i {
+         color: #ffffff;
+         font-size: 2em;
+     }
+
+#inpNavToggle {
+    display: none;
+}#inpNavToggle:checked ~ .nav {
+     left: 0;
+     transition: left ease-in-out .6s;
 }
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: var(--bar-height);
+    left: -100%;
+    width: 100%;
+    height: calc(100vh - var(--bar-height));
+    padding: 32px;
+    background: #222222;
+    box-sizing: border-box;
+    transition: left ease-in-out .6s;
+}.nav__link {
+     font-weight: 500;
+     padding: 16px 0;
+     text-decoration: none;
+     color: #ffffff;
+     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+ }.nav__link:hover {
+      opacity: 0.8;
+  }
+
+/* END OF HEADER */
+
+
+/* UTILLITY CLASSES */
+.u-centered {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px;
+    box-sizing: border-box;
+}
+/* END OF UTILLITY CLASSES */
+
+/* MEDIA QUERIES */
+@media screen and (min-width: 767px) {
+    .bar__nav-toggle {
+        display: none;
+    }
+
+    .nav {
+        display: initial;
+        position: static;
+        width: unset;
+        height: unset;
+        padding: unset;
+        background: transparent;
+    }.nav__link {
+         border-bottom: none;
+     }.nav__link:not(:last-of-type) {
+          margin-right: 24px;
+      }
+}
+/* END MEDIA QUERIES */
