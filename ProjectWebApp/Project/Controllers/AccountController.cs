@@ -115,8 +115,8 @@ namespace Project.Controllers
                 PasswordHash = hashedPassword,
                 EmailIsVerified = false,
                 Salt = salt,
-                SecretUserKey = "".RandomString(),
-                VerificationToken = "".RandomString()
+                SecretUserKey = CryptographyProcessor.GenerateKey(),
+                VerificationToken = CryptographyProcessor.GenerateKey()
             });
 
             _mailService.SendMailAsync(model.EmailAddress, "test", $"https://localhost:44325/Account/verifyemailaddress/?id={user.Id}&verificationtoken={user.VerificationToken}");
@@ -126,7 +126,7 @@ namespace Project.Controllers
                 *
                 */
 
-            return View();
+            return RedirectToAction("Login");
         }
 
         public async Task<IActionResult> VerifyEmailAddress(string id, string verificationToken)

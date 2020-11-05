@@ -33,6 +33,18 @@ namespace Project.Encryption
             var compareHash = GenerateHash(plainTextInput, salt);
             return compareHash.Equals(hash);
         }
+
+        /*
+         * Generate a Base64 string Key with given size
+         */
+        public static string GenerateKey()
+        {
+            var key = new byte[32];
+            using var generator = RandomNumberGenerator.Create();
+            generator.GetBytes(key);
+
+            return Convert.ToBase64String(key);
+        }
         
     }
 }
