@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Project.ExtensionMethods
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -12,28 +13,21 @@
 <body>
 
 <header class="header">
-    <div class="u-centered">
-        <div class="call-to-action">
-            <h1 class="call-to-action__title">Sign Up</h1>
-            <p class="call-to-action__description">
-                Create your own fitness schema's and share them with others!
-            </p>
-            <a asp-action="Login" class="call-to-action__button">Sign me up!</a>
-        </div>
-    </div>
+
 </header>
 
 <div class="bar">
     <div class="bar__content u-centered">
-        <img class="bar__logo" src="~/media/images/logo-placeholder.png" alt="sportensity"/>
+        <img class="bar__logo" src="~/media/images/logo_wit.svg" alt="sportensity"/>
         <input type="checkbox" id="inpNavToggle"/>
         <label class="bar__nav-toggle" for="inpNavToggle">
             <i class="material-icons">menu</i>
         </label>
         <nav class="nav">
-            <a class="nav__link" href="#">Home</a>
-            <a class="nav__link" href="#">Register</a>
-            <a class="nav__link" href="#">Login</a>
+            <a class="nav__link @Html.IsSelected(actions: "Index", controllers: "Home")" asp-action="Index" asp-controller="Home">Home</a>
+            <a class="nav__link" href="#">Example</a>
+            <a class="nav__link" href="#">Example</a>
+            <a class="nav__link @Html.IsSelected(actions: "Login", controllers: "Account")" asp-action="Login" asp-controller="Account">Login</a>
         </nav>
     </div>
 </div>
