@@ -1,7 +1,7 @@
 ﻿:root {
     --bar-height: 72px;
-    --color-primary: #009579;
-    --color-primary-light: #0affd2;
+    --color-primary: #173f5f;
+    --color-primary-light: #20639b;
 }
 
 body {
@@ -11,11 +11,11 @@ body {
 
 /* HEADER */
 .header {
-    height: 100vh;
+    height: 100%; /*was 100vh*/
     background: linear-gradient(to bottom right, var(--color-primary), var(--color-primary-light));
     display: flex;
     align-items: center;
-    padding-top: var(--bar-height);
+    /* padding-top: var(--bar-height); */
     box-sizing: border-box;
 }.call-to-action {
     max-width: 400px;
@@ -105,6 +105,75 @@ body {
 
 /* END OF HEADER */
 
+/* MAIN STYLING */
+main {
+    height: 100vh;
+    background: linear-gradient(to bottom right, var(--color-primary), var(--color-primary-light));
+    display: flex;
+    align-items: center;
+    padding-top: var(--bar-height);
+    box-sizing: border-box;
+}
+
+.form {
+    margin: 0 auto;
+    max-width: 400px;
+    padding: 32px;
+    box-sizing: border-box;
+    color: #ffffff;
+    background: #000000;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}.form__title {
+     text-align: center;
+ }.form__button {
+    background: white;
+      width: 100%;
+    outline: none;
+    font: bold 1.1em 'Poppins', sans-serif;
+    color: var(--color-primary);
+    border: 1px solid #ffffff;
+    border-radius: 4px;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    text-decoration: none;
+}.form__button:hover {
+        background: transparent;
+        color: #ffffff;
+    }
+.form__group {
+    padding: 1em 0;
+}
+.form__input {
+    width: 100%;
+    outline: none;
+    padding: 0.8em 0;
+    margin: 1em 0;
+    border: none;
+    border: 1px solid white;
+}.form__input:focus {
+     border: 1px solid var(--color-primary-light);
+     box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+ }.form__info {
+      text-align: center;
+  }.form__info a {
+       text-decoration: none;
+   }
+ /* END OF MAIN STYLING */
+
+/* FOOTER STYLING */
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: var(--color-primary);
+    color: white;
+    text-align: center;
+}
+/* END OF FOOTER STYLING*/
 
 /* UTILLITY CLASSES */
 .u-centered {
@@ -113,6 +182,9 @@ body {
     margin: 0 auto;
     padding: 16px;
     box-sizing: border-box;
+}
+.selected {
+    opacity: 0.8;
 }
 /* END OF UTILLITY CLASSES */
 

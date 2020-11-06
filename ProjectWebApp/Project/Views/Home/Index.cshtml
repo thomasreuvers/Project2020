@@ -1,6 +1,18 @@
 ﻿@using Microsoft.Extensions.WebEncoders.Testing
 @model LoginModel
 
+<main>
+    <div class="u-centered">
+        <div class="call-to-action">
+            <h1 class="call-to-action__title">Sign Up</h1>
+            <p class="call-to-action__description">
+                Create your own fitness schema's and share them with others!
+            </p>
+            <a asp-action="Register" asp-controller="Account" class="call-to-action__button">Sign me up!</a>
+        </div>
+    </div>
+</main>
+
 <button onclick="AddNewRow();">New Row</button>
 
 <script language="javascript">
