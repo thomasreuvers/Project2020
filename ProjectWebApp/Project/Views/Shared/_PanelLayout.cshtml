@@ -1,0 +1,53 @@
+﻿@using Project.ExtensionMethods
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Sportensity</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/d9cad782c3.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="~/css/panel.css" />
+</head>
+<body>
+
+<header>
+    <nav class="upper-nav">
+        <div class="upper-nav__left">
+            <i class="fas fa-bars toggle__SideBar"></i>
+        </div>
+        <div class="upper-nav__right">
+            <a class="nav__link" asp-controller="Account" asp-action="Logout">Logout</a>
+        </div>
+    </nav>
+</header>
+
+<div class="sidebar">
+    <div class="sidebar__header">
+        <div class="sidebar__option"><i class="fas fa-times toggle__SideBar"></i></div>
+        <div class="sidebar__info">
+            <img class="user__image" alt="" src="media/images/logo_wit.svg"/>
+            <p class="user__name">@User.Identity.Name</p>
+        </div>
+    </div>
+    <div class="sidebar__main">
+        <div class="sidebar__nav">
+            <a class="sidebar__nav-item" href="#"><i class="fas fa-home"></i> Home</a>
+            <a class="sidebar__nav-item" href="#">example</a>
+            <a class="sidebar__nav-item" href="#">example</a>
+            <a class="sidebar__nav-item" href="#">example</a>
+        </div>
+    </div>
+    <div class="sidebar__footer">v1.0</div>
+</div>
+
+@RenderBody()
+
+<footer></footer>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+@RenderSection("Scripts", required: false)
+</body>
+</html>

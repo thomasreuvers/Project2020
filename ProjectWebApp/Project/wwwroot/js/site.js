@@ -62,4 +62,12 @@ $(document).ready(function() {
     var currentLng = navigator.language.substring(0, 2) || navigator.userLanguage.substring(0, 2);
     var attributeName = 'data-tag';
     translate.init(attributeName, currentLng);
-})
+});
+
+
+// Toggle showing sidebar
+$(".toggle__SideBar").on("click", function() {
+
+    $(".sidebar").toggleClass("hide-bar");
+    console.log("hello");
+});
