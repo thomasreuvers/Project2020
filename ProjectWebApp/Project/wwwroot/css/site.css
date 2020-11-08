@@ -15,7 +15,7 @@ body {
     background: linear-gradient(to bottom right, var(--color-primary), var(--color-primary-light));
     display: flex;
     align-items: center;
-    /* padding-top: var(--bar-height); */
+    padding-top: var(--bar-height);
     box-sizing: border-box;
 }.call-to-action {
     max-width: 400px;
@@ -107,7 +107,8 @@ body {
 
 /* MAIN STYLING */
 main {
-    height: 100vh;
+    height: 100%;
+    min-height: 100vh;
     background: linear-gradient(to bottom right, var(--color-primary), var(--color-primary-light));
     display: flex;
     align-items: center;
@@ -116,10 +117,13 @@ main {
 }
 
 .form {
+    display: flex;
+    flex-direction: column;
     margin: 0 auto;
     max-width: 400px;
     padding: 32px;
     box-sizing: border-box;
+    justify-content: center;
     color: #ffffff;
     background: #000000;
     background: rgba(0, 0, 0, 0.1);
@@ -139,28 +143,36 @@ main {
     cursor: pointer;
     transition: background 0.15s, color 0.15s;
     text-decoration: none;
-}.form__button:hover {
+      margin: 0 0 1em;
+  }.form__button:hover {
         background: transparent;
         color: #ffffff;
     }
 .form__group {
     padding: 1em 0;
+    padding-right: 0.5em;
 }
 .form__input {
     width: 100%;
     outline: none;
     padding: 0.8em 0;
+    padding-left: 0.5em;
     margin: 1em 0;
     border: none;
     border: 1px solid white;
-}.form__input:focus {
+    border-radius: 3px;
+}.form__input::placeholder {
+        font-family: 'Poppins', sans-serif;
+ }.form__input:focus {
      border: 1px solid var(--color-primary-light);
      box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
  }.form__info {
       text-align: center;
-  }.form__info a {
-       text-decoration: none;
-   }
+  }
+    .form__info a {
+        text-decoration: none;
+        color: #8b9faf;
+    }
  /* END OF MAIN STYLING */
 
 /* FOOTER STYLING */
