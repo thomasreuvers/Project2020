@@ -66,15 +66,20 @@ namespace Project.Controllers
             identity.AddClaim(new Claim(ClaimTypes.Name, user.Username));
             identity.AddClaim(new Claim(ClaimTypes.Email, user.EmailAddress));
 
+
             // Add roles
             foreach (var role in user.Roles)
             {
                 identity.AddClaim(new Claim(ClaimTypes.Role, role));
             }
 
-            // Sign in
+            // Sign in and set cookie lifetime
             var principle = new ClaimsPrincipal(identity);
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principle);
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principle, new AuthenticationProperties
+            {
+                IsPersistent = false,
+                ExpiresUtc = DateTime.UtcNow.AddHours(1.0)
+            });
 
             // Redirect to secured user-panel
             return RedirectToAction("Index", "Panel");
