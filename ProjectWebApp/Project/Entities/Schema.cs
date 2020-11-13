@@ -13,6 +13,7 @@ namespace Project.Entities
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
         public string Name { get; set; }
+
         public List<Exercise> Exercises { get; set; }
 
         /* TODO:
