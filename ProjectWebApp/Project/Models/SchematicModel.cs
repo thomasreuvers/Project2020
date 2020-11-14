@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Project.Models
 {
-    public class SchemaModel
+    public class SchematicModel
     {
         public string SchemaName { get; set; }
 

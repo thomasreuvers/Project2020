@@ -7,7 +7,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Project.Entities
 {
-    public class Schema
+    public class Schematic
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]

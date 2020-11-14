@@ -14,9 +14,9 @@ namespace Project.Controllers
     public class PanelController : Controller
     {
         private readonly List<Exercise> _exercises = new List<Exercise>();
-        private readonly SchemaService _schemaService;
+        private readonly SchematicService _schemaService;
 
-        public PanelController(SchemaService schemaService)
+        public PanelController(SchematicService schemaService)
         {
             _schemaService = schemaService;
         }
@@ -25,7 +25,7 @@ namespace Project.Controllers
         {
             var schemas = await _schemaService.Get();
 
-            var schemaModel = new SchemaModel {InputFields = new List<string>()};
+            var schemaModel = new SchematicModel {InputFields = new List<string>()};
 
             foreach (var schema in schemas.TakeWhile(schema => schemas.Count != 0))
             {
@@ -44,13 +44,13 @@ namespace Project.Controllers
             return View(schemaModel);
         }
 
-        public async Task<IActionResult> UploadTask(SchemaModel schemaModel)
+        public async Task<IActionResult> UploadTask(SchematicModel schemaModel)
         {
             if (schemaModel == null) return View("Index");
 
             MapObject(schemaModel.InputFields);
 
-            await _schemaService.CreateSchemaAsync(new Schema
+            await _schemaService.CreateSchemaAsync(new Schematic
             {
                 Name = schemaModel.SchemaName,
                 Exercises = _exercises
