@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Project.Encryption
 {
-    public class CryptographyProcessor
+    public static class CryptographyProcessor
     {
 
         public static string CreateSalt(int size = 16)
