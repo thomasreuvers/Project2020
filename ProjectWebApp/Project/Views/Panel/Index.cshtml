@@ -1,76 +1,10 @@
 ﻿@using Project.Entities
-@model SchemaModel
+@model SchematicModel
 @{
     ViewData["title"] = "Home";
 }
 
 <main>
     
-    @if (Model != null)
-    {
-        <table>
-            <thead>
-                <tr>
-                    <th>Naam</th>
-                    <th>Gewicht</th>
-                    <th>Sets</th>
-                    <th>Reps</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-            @for (var i = 0; i < Model.InputFields.Count; i++)
-            {
-                if (Model.InputFields.Count.Equals(0)) {break;}
-
-                <tr>
-                    @for (var j = 0; j < typeof(Exercise).GetProperties().Length; j++)
-                    {
-                        <td>@Model.InputFields[j]</td>
-                    }       
-                </tr>
-
-                Model.InputFields.RemoveRange(0, typeof(Exercise).GetProperties().Length);
-            }
-            </tbody>
-        </table>
-    }
-
-    <form asp-action="UploadTask">
-        <label>Schema name</label>
-        <input asp-for="SchemaName"/>
-        <table>
-            <thead>
-            <tr>
-                <th>Naam</th>
-                <th>Gewicht</th>
-                <th>Sets</th>
-                <th>Reps</th>
-                <th>Description</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td><input asp-for="InputFields"/></td>
-                <td><input asp-for="InputFields"/></td>
-                <td><input asp-for="InputFields"/></td>
-                <td><input asp-for="InputFields"/></td>
-                <td><input asp-for="InputFields"/></td>
-            </tr>
-            <tr>
-                <td><input asp-for="InputFields"/></td>
-                <td><input asp-for="InputFields"/></td>
-                <td><input asp-for="InputFields"/></td>
-                <td><input asp-for="InputFields"/></td>
-                <td><input asp-for="InputFields"/></td>
-            </tr>
-            </tbody>
-            <tfoot>
-            <tr>
-                <td><input type="submit"/></td>
-            </tr>
-            </tfoot>
-        </table>
-    </form>
-
+    
 </main>
