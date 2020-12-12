@@ -10,10 +10,10 @@ namespace Project.Entities
     public class Exercise
     {
         public string Name { get; set; }
-        public decimal Weight { get; set; }
+        public string Description { get; set; }
         public string Sets { get; set; }
         public string Reps { get; set; }
-        public string Description { get; set; }
+        public decimal Weight { get; set; }
 
         // TODO: can Reps and Sets be strings? For more dynamic input?
     }
