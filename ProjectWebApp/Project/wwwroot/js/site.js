@@ -71,3 +71,30 @@ $(".toggle__SideBar").on("click", function() {
     $(".sidebar").toggleClass("hide-bar");
     console.log("hello");
 });
+
+
+// Add new table row
+$(".new-exercise").on("click",
+    function() {
+        $("#table-body").after($(".bg-dark"))
+            .append($("<tr>")
+                .append($("<td>").append($("<input class=\"form-control\" type=\"text\" id=\"InputFields\" name=\"InputFields\" />")))
+                .append($("<td>").append($("<input class=\"form-control\" type=\"text\" id=\"InputFields\" name=\"InputFields\" />")))
+                .append($("<td>").append($("<input class=\"form-control\" type=\"text\" id=\"InputFields\" name=\"InputFields\" />")))
+                .append($("<td>").append($("<input class=\"form-control\" type=\"text\" id=\"InputFields\" name=\"InputFields\" />")))
+                .append($("<td>").append($("<input class=\"form-control\" type=\"text\" id=\"InputFields\" name=\"InputFields\" />")))
+            );
+    });
+// Remove last table row
+$(".remove-exercise").click(function () {
+    $("#table-body > tr:last").prev().remove();
+});
+
+// Show Modal
+//$(".create-btn").on("click", function() {
+//
+//    $(".option-1").html("Create");
+//    // $(".modal-body")
+//    $(".modal-title").html("New schematic");
+//
+//});
