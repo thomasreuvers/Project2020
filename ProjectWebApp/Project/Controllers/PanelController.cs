@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Project.Entities;
 using Project.Models;
 using Project.Services;
@@ -21,49 +22,39 @@ namespace Project.Controllers
             _schemaService = schemaService;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var schemas = await _schemaService.Get();
-
-            var schemaModel = new SchematicModel {InputFields = new List<string>()};
-
-            foreach (var schema in schemas.TakeWhile(schema => schemas.Count != 0))
-            {
-                foreach (var exercise in schema.Exercises)
-                {
-                    foreach (var prop in exercise.GetType().GetProperties())
-                    {
-                        schemaModel.InputFields.Add(prop.GetValue(exercise).ToString());
-
-                    }
-                }
-
-                schemaModel.SchemaName = schema.Name;
-            }
-
-            return View(schemaModel);
+            return View();
         }
 
-        public async Task<IActionResult> UploadTask(SchematicModel schemaModel)
+        public IActionResult Schematics()
         {
-            if (schemaModel == null) return View("Index");
+            return View();
+        }
 
-            MapObject(schemaModel.InputFields);
+        [HttpPost]
+        public async Task<IActionResult> Schematics(SchematicModel schematicModel)
+        {
+            if (!ModelState.IsValid) return View();
 
+            // Check if list has any items and if so check if not all items are null
+            if (!schematicModel.InputFields.Any() || schematicModel.InputFields.All(x => x == null)) return View();
+
+            MapStringListToExercise(schematicModel.InputFields);
             await _schemaService.CreateSchemaAsync(new Schematic
-            {
-                Name = schemaModel.SchemaName,
-                Exercises = _exercises
-            });
+                {
+                    Exercises = _exercises,
+                    Name = schematicModel.SchemaName
+                });
 
-            /* TODO:
-             * Save exercises seperatly and save a array of object id's in schemas collection instead of whole object?
-             */
+            // Clear modelstate so our previous input will not be saved.
+            ModelState.Clear();
+            //TODO: make update functionality in the same form
 
-            return View("Index");
+            return View();
         }
 
-        private void MapObject(List<string> list)
+        private void MapStringListToExercise(List<string> list)
         {
             if(list == null || !list.Any()) return;
 
@@ -92,7 +83,7 @@ namespace Project.Controllers
             }
 
             _exercises.Add(exercise);
-            MapObject(list);
+            MapStringListToExercise(list);
         }
     }
 }
