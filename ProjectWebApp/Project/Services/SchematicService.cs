@@ -20,6 +20,9 @@ namespace Project.Services
         }
 
         public Task<List<Schematic>> Get() => _schemas.Find(schema => true).ToListAsync();
+
+        public Task<Schematic> Get(string id) => _schemas.Find(x => x.Id == id).FirstOrDefaultAsync();
+
         public async Task<Schematic> CreateSchemaAsync(Schematic schema)
         {
             await _schemas.InsertOneAsync(schema);

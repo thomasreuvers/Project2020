@@ -73,21 +73,30 @@ $(".toggle__SideBar").on("click", function() {
 });
 
 
+var i = $("#table-body tr").length - 2;
+console.log(i);
+
 // Add new table row
 $(".new-exercise").on("click",
-    function() {
+    function () {
+        i++;
+        console.log(i);
         $("#table-body").after($(".bg-dark"))
             .append($("<tr>")
-                .append($("<td>").append($("<input class=\"form-control\" type=\"text\" id=\"InputFields\" name=\"InputFields\" />")))
-                .append($("<td>").append($("<input class=\"form-control\" type=\"text\" id=\"InputFields\" name=\"InputFields\" />")))
-                .append($("<td>").append($("<input class=\"form-control\" type=\"text\" id=\"InputFields\" name=\"InputFields\" />")))
-                .append($("<td>").append($("<input class=\"form-control\" type=\"text\" id=\"InputFields\" name=\"InputFields\" />")))
-                .append($("<td>").append($("<input class=\"form-control\" type=\"text\" id=\"InputFields\" name=\"InputFields\" />")))
+                .append($("<td>").append($(`<input class="form-control" type="text" id="Exercises_${i}__Name" name="Exercises[${i}].Name" value="">`)))
+                .append($("<td>").append($(`<input class="form-control" type="text" id="Exercises_${i}__Description" name="Exercises[${i}].Description" value="">`)))
+                .append($("<td>").append($(`<input class="form-control" type="text" id="Exercises_${i}__Sets" name="Exercises[${i}].Sets" value="">`)))
+                .append($("<td>").append($(`<input class="form-control" type="text" id="Exercises_${i}__Reps" name="Exercises[${i}].Reps" value="">`)))
+                .append($("<td>").append($(`<input class="form-control" type="text" id="Exercises_${i}__Weight" name="Exercises[${i}].Weight" value="">`)))
             );
     });
 // Remove last table row
 $(".remove-exercise").click(function () {
-    $("#table-body > tr:last").prev().remove();
+    if (i > 0) {
+        i--;
+        console.log(i);
+        $("#table-body > tr:last").prev().remove();
+    }
 });
 
 // Show Modal

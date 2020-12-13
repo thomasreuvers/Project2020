@@ -1,0 +1,24 @@
+﻿@model IEnumerable<SchematicModel>
+<table class="table table-striped table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>Schematic name</th>
+            <th>Date of creation</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var schematicModel in Model)
+            {
+                <tr>
+                    <td>@schematicModel.SchemaName</td>
+                    <td>-</td>
+                    <td><a asp-action="Schematics" asp-route-schematicId="@schematicModel.Id" type="button" class="btn btn-primary"><i class="fas fa-edit"></i></a></td>
+                </tr>
+            }
+        }
+    </tbody>
+    <tfoot></tfoot>
+</table>
