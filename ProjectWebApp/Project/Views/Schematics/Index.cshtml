@@ -9,6 +9,7 @@
                     <th>Name</th>
                     <th>Date</th>
                     <th>Exercises</th>
+                    <th colspan="3">Action</th>
                 </tr>
                 </thead>
 
@@ -17,8 +18,12 @@
                 {
                     <tr>
                         <td>@schema.SchemaName</td>
-                        <td>#</td>
+                        <td>@schema.TimeOfCreation<td>
                         <td>@schema.Exercises.Count</td>
+                        <td colspan="3">
+                            @Html.RouteLink("edit", "editSchematicRoute", new { id = schema.Id })
+                            @Html.RouteLink("delete", "deleteSchematicRoute", new { id = schema.Id })
+                        </td>
                     </tr>
                 }
                 </tbody>

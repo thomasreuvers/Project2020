@@ -94,6 +94,6 @@ $(".new-exercise").on("click",
 $(".remove-exercise").click(function () {
     if (i > 0) {
         i--;
-        $("#table-body > tr:last").remove();
+        $("#table-body > tr:last").prev().remove();
     }
 });

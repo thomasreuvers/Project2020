@@ -11,6 +11,8 @@ namespace Project.Models
     {
         public string Id { get; set; }
 
+        public DateTime TimeOfCreation { get; set; }
+
         [Required]
         public string SchemaName { get; set; }
 

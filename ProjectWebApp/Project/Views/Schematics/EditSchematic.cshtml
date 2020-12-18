@@ -1,0 +1,42 @@
+﻿@model SchematicModel
+<div class="col-12">
+    @using (Html.BeginRouteForm("editSchematicRoute", FormMethod.Post))
+    {
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Sets</th>
+                    <th>Reps</th>
+                    <th>Weight</th>
+                </tr>
+            </thead>
+
+            <tbody id="table-body">
+            @Html.Hidden(Model.Id)
+            @for (var i = 0; i < Model.Exercises.Count; i++)
+                {
+                    <tr>
+                        <td><input class="form-control" asp-for="Exercises[i].Name"/></td>
+                        <td><input class="form-control" asp-for="Exercises[i].Description"/></td>
+                        <td><input class="form-control" asp-for="Exercises[i].Sets"/></td>
+                        <td><input class="form-control" asp-for="Exercises[i].Reps"/></td>
+                        <td><input class="form-control" asp-for="Exercises[i].Weight"/></td>
+                    </tr>
+                }
+
+            <tr class="bg-dark table-footer">
+                <td colspan="2" class="text-left">
+                    <input class="form-control" placeholder="Schematic name" asp-for="SchemaName"/>
+                </td>
+                <td colspan="3" class="text-right">
+                    <input type="submit" class="btn btn-info" value="Update"/>
+                    <button type="button" class="btn new-exercise btn-primary"><i class="fas fa-plus"></i> New exercise</button>
+                    <button type="button" class="btn remove-exercise btn-danger"><i class="fas fa-trash"></i> Remove exercise</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    }
+</div>
