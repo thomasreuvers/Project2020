@@ -30,5 +30,7 @@ namespace Project.Services
         }
 
         public async void UpdateSchemaAsync(Schematic schema) => await _schemas.ReplaceOneAsync(x => x.Id == schema.Id, schema);
+
+        public async void DeleteSchematicAsync(string id) => await _schemas.DeleteOneAsync(x => x.Id == id);
     }
 }

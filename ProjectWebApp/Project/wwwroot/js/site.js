@@ -73,14 +73,13 @@ $(".toggle__SideBar").on("click", function() {
 });
 
 
-var i = $("#table-body tr").length - 2;
-console.log(i);
 
 // Add new table row
+var i = $("#table-body tr").length - 2;
+
 $(".new-exercise").on("click",
     function () {
         i++;
-        console.log(i);
         $("#table-body").after($(".bg-dark"))
             .append($("<tr>")
                 .append($("<td>").append($(`<input class="form-control" type="text" id="Exercises_${i}__Name" name="Exercises[${i}].Name" value="">`)))
@@ -90,20 +89,11 @@ $(".new-exercise").on("click",
                 .append($("<td>").append($(`<input class="form-control" type="text" id="Exercises_${i}__Weight" name="Exercises[${i}].Weight" value="">`)))
             );
     });
+
 // Remove last table row
 $(".remove-exercise").click(function () {
     if (i > 0) {
         i--;
-        console.log(i);
-        $("#table-body > tr:last").prev().remove();
+        $("#table-body > tr:last").remove();
     }
 });
-
-// Show Modal
-//$(".create-btn").on("click", function() {
-//
-//    $(".option-1").html("Create");
-//    // $(".modal-body")
-//    $(".modal-title").html("New schematic");
-//
-//});

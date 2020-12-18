@@ -1,0 +1,29 @@
+﻿@model IEnumerable<SchematicModel>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Date</th>
+                    <th>Exercises</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                @foreach (var schema in Model)
+                {
+                    <tr>
+                        <td>@schema.SchemaName</td>
+                        <td>#</td>
+                        <td>@schema.Exercises.Count</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
